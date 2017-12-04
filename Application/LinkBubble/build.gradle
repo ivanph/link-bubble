@@ -74,6 +74,11 @@ android {
             }
         }
     }
+    sourceSets {
+        main {
+            jni.srcDirs = []
+        }
+    }
     buildTypes {
         debug {
             applicationIdSuffix '.dev'
