@@ -5,7 +5,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.2'
-        classpath 'io.fabric.tools:gradle:1.19.0'
     }
 }
 
@@ -16,7 +15,6 @@ def versionPatch = 58
 def versionBuild = 0 // bump for dogfood builds, public betas, etc.
 
 apply plugin:'com.android.application'
-apply plugin: 'io.fabric'
 
 boolean isRelease = false;
 for (int i = 0; i < project.gradle.startParameter.taskNames.size(); i++) {
@@ -28,7 +26,6 @@ for (int i = 0; i < project.gradle.startParameter.taskNames.size(); i++) {
 
 repositories {
     mavenCentral()
-    maven { url 'https://maven.fabric.io/public' }
 }
 
 def gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
@@ -105,9 +102,6 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:22.2.0'
     compile 'com.android.support:design:22.2.0'
     compile 'se.emilsjolander:stickylistheaders:2.1.2'
-    compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
-        transitive = true;
-    }
     compile 'com.squareup.retrofit:retrofit:1.5.0'
     compile 'com.timehop.stickyheadersrecyclerview:library:0.4.0@aar'
     compile 'com.jakewharton:butterknife:7.0.0'
@@ -121,7 +115,5 @@ dependencies {
 task showVersion << {
     println buildscript.configurations.classpath.resolvedConfiguration.firstLevelModuleDependencies.moduleVersion
 }
-
-crashlytics.verboseGradlePlugin = true
 
 clean.dependsOn showVersion
