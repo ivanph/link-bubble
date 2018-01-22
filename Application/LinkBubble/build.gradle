@@ -1,10 +1,10 @@
 buildscript {
     repositories {
         jcenter()
-        maven { url 'https://maven.fabric.io/public' }
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.2'
+        classpath 'com.android.tools.build:gradle:3.0.1'
     }
 }
 
@@ -33,7 +33,8 @@ def buildTime = new Date().format("yyyy-MM-dd'T'HH:mm'Z'", TimeZone.getTimeZone(
 
 android {
     compileSdkVersion 22
-    buildToolsVersion '25.0.0'
+    buildToolsVersion '26.0.2'
+    flavorDimensions "default"
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 22
@@ -46,6 +47,8 @@ android {
 
         ndk {
             ldLibs "log"
+            moduleName "LinkBubble"
+            abiFilters "armeabi-v7a", "x86"
         }
     }
 
@@ -74,6 +77,7 @@ android {
     sourceSets {
         main {
             jni.srcDirs = []
+            jniLibs.srcDir 'src/main/libs'
         }
     }
     buildTypes {
@@ -93,23 +97,29 @@ android {
     lintOptions {
         lintConfig file("lint.xml")
     }
+    externalNativeBuild {
+        ndkBuild {
+            path 'Android.mk'
+        }
+    }
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:22.2.0'
-    compile "com.android.support:appcompat-v7:22.2.0"
-    compile 'com.android.support:palette-v7:22.2.0'
-    compile 'com.android.support:recyclerview-v7:22.2.0'
-    compile 'com.android.support:design:22.2.0'
-    compile 'se.emilsjolander:stickylistheaders:2.1.2'
-    compile 'com.squareup.retrofit:retrofit:1.5.0'
-    compile 'com.timehop.stickyheadersrecyclerview:library:0.4.0@aar'
-    compile 'com.jakewharton:butterknife:7.0.0'
-    compile 'com.squareup:otto:1.3.8'
-    compile files('libs/picasso-2.1.1.jar')
-    compile files('libs/jsoup-1.7.3.jar')
-    compile files('libs/slf4j-android-1.5.8.jar')
-    //compile project(':Libraries:ViewPagerIndicator:library')
+    implementation 'com.android.support:support-v4:22.2.0'
+    implementation "com.android.support:appcompat-v7:22.2.0"
+    implementation 'com.android.support:palette-v7:22.2.0'
+    implementation 'com.android.support:recyclerview-v7:22.2.0'
+    implementation 'com.android.support:design:22.2.0'
+    implementation 'se.emilsjolander:stickylistheaders:2.1.2'
+    implementation 'com.squareup.retrofit:retrofit:1.5.0'
+    implementation 'com.timehop.stickyheadersrecyclerview:library:0.4.0@aar'
+    implementation 'com.jakewharton:butterknife:7.0.0'
+    annotationProcessor 'com.jakewharton:butterknife:7.0.0'
+    implementation 'com.squareup:otto:1.3.8'
+    implementation files('libs/picasso-2.1.1.jar')
+    implementation files('libs/jsoup-1.7.3.jar')
+    implementation files('libs/slf4j-android-1.5.8.jar')
+    //implementation project(':Libraries:ViewPagerIndicator:library')
 }
 
 task showVersion << {

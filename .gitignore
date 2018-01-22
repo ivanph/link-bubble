@@ -66,6 +66,9 @@ Application/LinkBubble/src/main/AndroidManifest.xml
 dist
 build-release.sh
 
+# NDK files
+.externalNativeBuild
+
 # Adblock lib copied via npm install from package.json's postinstall
 Application/LinkBubble/src/main/jni/ABPFilterParser.cpp
 Application/LinkBubble/src/main/jni/ABPFilterParser.h
